@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3>Make a New Budget</h3>
+            </div>
+            <div class="card-body">
+                <form action="/auth/addBudget" method="POST">
+                    <div class="form-group">
+                        <label for="name"><h5>Budget Name</h5></label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+
+                    <label for="income"><h5>Income:</h5></label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" id="income" name="income">
+                    </div>
+
+                    <hr>
+
+                    <h5>Available Income: $<span id="availIncome">0</span></h5>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="housing"><h6>Housing:</h6></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control expense" id="housing" name="housing">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="transportation"><h6>Transportation:</h6></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control expense" id="transportation"
+                                    name="transportation">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="groceries"><h6>Groceries:</h6></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control expense" id="groceries" name="groceries">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <label for="other_food"><h6>Other Food:</h6></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control expense" id="other_food" name="other_food">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="savings"><h6>Savings:</h6></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control expense" id="savings" name="savings">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <label for="other"><h6>Other:</h6></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control expense" id="other" name="other">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Budget</button>
+                    <a class="btn btn-outline-secondary" href="/main" role="button">Go Back</a>
+                </form>
+            </div>
+            {{#if message}}
+            <h4 class="alert alert-danger mt-4">{{message}}</h4>
+            {{/if}}
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+
+        <script src="addBudget.js">
+        </script>
+</body>
+
+</html>

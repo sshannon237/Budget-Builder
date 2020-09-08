@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3>Welcome {{user.users_name}}</h3>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-primary" href="/addBudget" role="button">Make a new budget</a>
+                <hr>
+                {{#unless budgets}}
+                    <h5>No budgets yet!</h5>
+                {{/unless}}
+                {{#if budgets}}
+                    <div class="row">
+                        <div class="col">
+                            <h4>Your Budgets</h4>
+                        </div>
+                        <div class="col">
+                            <h4>Date Created</h4>
+                        </div>
+                    </div>
+                    {{#each budgets}}
+                        <div class="row">
+                            <div class="col">
+                                <h6><a href="/viewBudget?budget={{this.budgets_name}}">{{this.budgets_name}}</a></h6>
+                            </div>
+                            <div class="col">
+                                <h6>{{this.budgets_date}}</h6>
+                            </div>
+                        </div>
+                    {{/each}}
+                {{/if}}
+                <hr>
+                <a class="btn btn-primary" href="/auth/logout" role="button">Logout</a>
+            </div>
+        </div>
+    </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>
