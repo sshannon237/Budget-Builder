@@ -101,6 +101,7 @@
 
                     <button type="submit" class="btn btn-primary">Confirm Changes</button>
                     <a class="btn btn-outline-secondary" href="/viewBudget?budget={{budget.budgets_name}}" role="button">Go Back</a>
+                    <a class="btn btn-danger" href="/auth/deleteBudget?budget={{budget.budgets_name}}" role="button">Delete</a>
                 </form>
             </div>
             {{#if message}}

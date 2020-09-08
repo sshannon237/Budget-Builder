@@ -7,6 +7,7 @@ router.post("/register", authController.register);
 router.post("/login", authController.login);
 router.post("/addBudget", authController.addBudget);
 router.post("/updateBudget", authController.updateBudget);
+router.get("/deleteBudget", authController.deleteBudget);
 router.get("/logout", authController.logout);
 
 
