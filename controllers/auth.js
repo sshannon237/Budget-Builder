@@ -12,6 +12,11 @@ const db = mysql.createConnection({
     database: process.env.DB
 });
 
+
+/**
+ * Register user onto database
+ * Based on code from Telmo Sampaio's NodeJS MySQL tutorial. https://telmosampaio.com/
+ */
 exports.register = (req, res) => {
 
     const name = req.body.name;
@@ -74,6 +79,10 @@ exports.register = (req, res) => {
     });
 }
 
+/**
+ * Login into application. User authenication and making a new cookie
+ * Based on code from Telmo Sampaio's NodeJS MySQL tutorial. https://telmosampaio.com/
+ */
 exports.login = async (req, res) => {
     try {
         const email = req.body.email;
@@ -116,6 +125,10 @@ exports.login = async (req, res) => {
     }
 }
 
+/**
+ * Checks the cookie to check if the user is logged in.
+ * Based on code from Telmo Sampaio's NodeJS MySQL tutorial. https://telmosampaio.com/
+ */
 exports.isLoggedIn = async (req, res, next) => {
     if (req.cookies.jwt) {
         try {
@@ -139,6 +152,10 @@ exports.isLoggedIn = async (req, res, next) => {
     }
 };
 
+/**
+ * Logout the user and expires the user's cookie.
+ * Based on code from Telmo Sampaio's NodeJS MySQL tutorial. https://telmosampaio.com/
+ */
 exports.logout = async (req, res) => {
     res.cookie("jwt", "logout", {
         expires: new Date(Date.now() + 2*1000),
@@ -148,6 +165,9 @@ exports.logout = async (req, res) => {
     res.status(200).redirect("/");
 };
 
+/**
+ * Gets all budgets from the logged in user to display on the main page.
+ */
 exports.getBudgets = async (req, res, next) => {
     if (req.cookies.jwt) {
         try {
@@ -170,6 +190,9 @@ exports.getBudgets = async (req, res, next) => {
     }
 }
 
+/**
+ * View all information from a specific budget.
+ */
 exports.viewBudget = async (req, res, next) => {
     try {
         let decoded;
@@ -190,7 +213,9 @@ exports.viewBudget = async (req, res, next) => {
         return next();
     }
 }
-
+/**
+ * Add a row to the budgets table in the database
+ */
 exports.addBudget = async (req, res) => {
 
     let decoded;
@@ -244,6 +269,9 @@ exports.addBudget = async (req, res) => {
     });
 }
 
+/**
+ * Updates a row in the budgets table of the database
+ */
 exports.updateBudget = async (req, res) => {
 
     let decoded;
@@ -318,80 +346,9 @@ exports.updateBudget = async (req, res) => {
     });
 }
 
-exports.updateBudget = async (req, res) => {
-
-    let decoded;
-
-    const name = req.body.name;
-    const income = req.body.income;
-    const transportation = req.body.transportation;
-    const housing = req.body.housing;
-    const groceries = req.body.groceries;
-    const other_food = req.body.other_food;
-    const savings = req.body.savings;
-    const other = req.body.other;
-
-    try {
-        decoded = await promisify(jwt.verify)(req.cookies.jwt,
-            process.env.JWT_SECRET);
-    } catch (error) {
-        console.log(error);
-    }
-    db.query("SELECT budgets_name FROM budgets WHERE budgets_name = ? AND users_id = ?", [name, decoded.id], async (err, results) => {
-        if (err) {
-            console.log(err.message)
-        }
-        if (results.length > 0 && results[0].budgets_name != name) {
-            return res.status(400).render("editBudget", {
-                message: "A budget with that name already exists",
-                budget: {
-                    budgets_name: name,
-                    users_id: decoded.id,
-                    budgets_income: income,
-                    budgets_housing: housing,
-                    budgets_transportation: transportation,
-                    budgets_groceries: groceries,
-                    budgets_eating_out: other_food,
-                    budgets_savings: savings,
-                    budgets_other: other
-                }
-            });
-        }
-        if (name.trim().length == 0) {
-            return res.status(400).render("editBudget", {
-                message: "Please enter a name",
-                budget: {
-                    budgets_name: name,
-                    users_id: decoded.id,
-                    budgets_income: income,
-                    budgets_housing: housing,
-                    budgets_transportation: transportation,
-                    budgets_groceries: groceries,
-                    budgets_eating_out: other_food,
-                    budgets_savings: savings,
-                    budgets_other: other
-                }
-            });
-        }
-        db.query("UPDATE budgets SET ? WHERE budgets_id = ?",[{
-            budgets_name: name,
-            users_id: decoded.id,
-            budgets_income: income,
-            budgets_housing: housing,
-            budgets_transportation: transportation,
-            budgets_groceries: groceries,
-            budgets_eating_out: other_food,
-            budgets_savings: savings,
-            budgets_other: other
-        },req.query.id], (err, results) => {
-            if (err) {
-                console.log(err.message)
-            }
-        })
-        res.status(200).redirect("/viewBudget?budget="+name);
-    });
-}
-
+/**
+ * Deletes a row from the database.
+ */
 exports.deleteBudget = async (req, res) => {
 
     let decoded;
